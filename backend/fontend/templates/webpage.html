@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html
+  <head>
+    <script>
+      function checkbox(data){
+        if(data == 'on'){
+          return true;
+        }
+        return false;
+      };
+    
+      function get_info(){
+          telephone = document.getElementById('telephone').value;
+          telephone = checkbox(telephone);
+          add_no = document.getElementById('add_no').value;
+          add_no = checkbox(add_no);
+          iptv = document.getElementById('iptv').value;
+          iptv =  checkbox(iptv);
+          updated = document.getElementById('updated').value;
+          updated =  checkbox(updated);
+          var jsfile={
+              'name' : document.getElementById("name").value,
+              'birthday' : document.getElementById('birthday').value,
+              'address' : document.getElementById('address').value,
+              'id' : document.getElementById('id').value,
+              'status' : document.getElementById('status').value,
+              'wife_id' : document.getElementById('wife_id').value,
+              'ID_photo' : document.getElementById('ID_photo').value,
+              'email' : document.getElementById('email').value,
+              'construction_type' : document.getElementById('construction_type').value,
+              'net' : document.getElementById('net').value,
+              'telephone': telephone,
+              'add_no': add_no,
+              'iptv': iptv,
+              'phone_no' : document.getElementById('phone_no').value,
+              'updated' : updated,
+          }
+          var json_str = JSON.stringify(jsfile);
+          var json = JSON.parse(json_str);
+          return json;
+      };
+      
+      async function func(){
+        var data = get_info();
+        try {
+          const request = new Request('http://localhost:5000/register', {
+            method: 'POST',
+            body: JSON.stringify(data),
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          });
+          const response = await fetch(request)
+          console.log('Completed!', response.body);
+          /*const response = fetch('http://localhost:5000/register', {
+            method: "POST",
+            body: JSON.stringify(data),
+            headers: {'Content-Type': 'application/json; charset=UTF-8'},
+          });
+          const responseBody = await response.body;
+          console.log("HELLO "+ responseBody);
+            //.then(response => response.json())
+            //.then(w => console.log(w))
+            //.catch(err => console.log(err));
+          //console.log('Completed!', response);
+          //console.log(response);*/
+        } catch(err) {
+          console.error(`Error: ${err}`);
+        }
+        /*xhr = new XMLHttpRequest(); 
+        var url = "http://localhost:5000/"; 
+        xhr.open("POST", url, true); 
+        xhr.setRequestHeader("Content-type", "application/json"); 
+        xhr.onreadystatechange = function () {  
+            if (xhr.readyState == 4 && xhr.status == 200) { 
+                var json = get_info(); 
+                console.log(json.email + ", " + json.name) 
+            } 
+        } 
+        xhr.send(data); 
+          /*var xhttp = new XMLHttpRequest();   // new HttpRequest instance
+          xhttp.open("POST", "http://localhost:5000/", true);
+          xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+          xhttp.send("?name="+x.name+"&birthday="+x.birthday+"&address="+x.address+"&id="+x.id+"&status="+x.status+"&wife_id="+x.wife_id+"&ID_photo="+x.ID_photo+"&email="+x.email+"&net="+x.net+"&telephone="+x.telephone+"&add_no="+x.add_no+"&iptv="+x.iptv+"&phone_no="+x.phone_no+"&updated="+x.updated);
+          */
+        }
+    </script>
+  </head>
+  <body>
+    <form>
+      <label for="name">Full Name:</label>
+      <input type="text" required="required" patten="[A-Za-z]+\s[A-Za-z]+\s[A-Za-z]+\s[A-Za-z]+" id="name" name="name" placeholder="Full Name">
+      <br>
+      <label for="birthday">Birthday:</label>
+      <input type="date" required="required" id="birthday" name="birthday">
+      <br>
+      <label for="address">Adress:</label>
+      <input type="text" required="required" id="address" name="address" placeholder="Address">
+      <br>
+      <label for="id">ID number :</label>
+      <input type="text" required="required" minlength="9" maxlength="10" id="id" name="id" placeholder="1234567890">
+      <br>
+      <label for="status">Social status:</label>
+      <input type="text" required="required" id="status" name="status" placeholder="Married/Single">
+      <br>
+      <label for="wife_id">Wife's ID number:</label>
+      <input type="text" minlength="9" maxlength="10" id="wife_id" name="wife_id" placeholder="1234567890">
+      <br>
+      <label for="ID_photo">ID Image:</label>
+      <input type="file" accept="image/*" id="ID_photo" name="ID_photo">
+      <br>
+      <label for="email">Email:</label>
+      <input type="email" required="required" id="email" name="email" placeholder="email@exp.com">
+      <br>
+      <label for="construction">Construction type:</label>
+      <input list="construction" required="required" name="construction_type" id="construction_type">
+      <datalist id="construction">
+        <option value="Residential">
+        <option value="Commercial">
+      </datalist>
+      <br>
+      <label for="net">Required internet speed:</label>
+      <input list="internet" required="required" name="net" id="net">
+      <datalist id="internet">
+        <option value="100">
+        <option value="300">
+        <option value="500">
+      </datalist>
+      <br>
+      <label for="telephone">Do you want to get telephone service?</label>
+      <input type="checkbox" id="telephone" name="telephone">
+      <br>
+      <label for="add_no">Do you want to add your number to the phone mail?</label>
+      <input type="checkbox" id="add_no" name="add_no">
+      <br>
+      <label for="iptv">Add IPTV</label>
+      <input type="checkbox" id="iptv" name="iptv">
+      <br>
+      <label for="phone_no">Phone number:</label>
+      <input type="text" required="required" id="phone_no" name="phone_no" placeholder="0500000000 ">
+      <br>
+      <label for="updated">Is the request new?</label>
+      <input type="checkbox" id="updated" name="updated">
+      <br>
+      <button name="btn" id="btn" onclick="func()" type="button">Login</button>
+    </form>
+  </body>
+</html>
