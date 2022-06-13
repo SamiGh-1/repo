@@ -42,48 +42,55 @@
       
       async function func(){
         var data = get_info();
-        try {
-          const request = new Request('http://localhost:5000/register', {
-            method: 'POST',
-            body: JSON.stringify(data),
-            headers: {
-              'Content-Type': 'application/json'
+        if (data.updated == false){
+          try {
+            const request = new Request('http://localhost:5000/register', {
+              method: 'POST',
+              body: JSON.stringify(data),
+              headers: {
+                'Content-Type': 'application/json'
+              }
+            });
+            const response = await fetch(request)
+            console.log('Completed!', response.body);
+          
+          } catch(err) {
+            console.error(`Error: ${err}`);
+          }
+        }else{
+          try {
+              const request = new Request('http://localhost:5000/register', {
+                method: 'PUT',
+                body: JSON.stringify(data),
+                headers: {
+                  'Content-Type': 'application/json'
+                }
+              });
+              const response = await fetch(request)
+              console.log('Completed!', response.body);
+            
+            } catch(err) {
+              console.error(`Error: ${err}`);
             }
-          });
-          const response = await fetch(request)
-          console.log('Completed!', response.body);
-          /*const response = fetch('http://localhost:5000/register', {
-            method: "POST",
-            body: JSON.stringify(data),
-            headers: {'Content-Type': 'application/json; charset=UTF-8'},
-          });
-          const responseBody = await response.body;
-          console.log("HELLO "+ responseBody);
-            //.then(response => response.json())
-            //.then(w => console.log(w))
-            //.catch(err => console.log(err));
-          //console.log('Completed!', response);
-          //console.log(response);*/
-        } catch(err) {
-          console.error(`Error: ${err}`);
         }
-        /*xhr = new XMLHttpRequest(); 
-        var url = "http://localhost:5000/"; 
-        xhr.open("POST", url, true); 
-        xhr.setRequestHeader("Content-type", "application/json"); 
-        xhr.onreadystatechange = function () {  
-            if (xhr.readyState == 4 && xhr.status == 200) { 
-                var json = get_info(); 
-                console.log(json.email + ", " + json.name) 
-            } 
-        } 
-        xhr.send(data); 
-          /*var xhttp = new XMLHttpRequest();   // new HttpRequest instance
-          xhttp.open("POST", "http://localhost:5000/", true);
-          xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-          xhttp.send("?name="+x.name+"&birthday="+x.birthday+"&address="+x.address+"&id="+x.id+"&status="+x.status+"&wife_id="+x.wife_id+"&ID_photo="+x.ID_photo+"&email="+x.email+"&net="+x.net+"&telephone="+x.telephone+"&add_no="+x.add_no+"&iptv="+x.iptv+"&phone_no="+x.phone_no+"&updated="+x.updated);
-          */
         }
+      async function func2(){
+        var data = get_info();
+        try {
+            const request = new Request('http://localhost:5000/register', {
+              method: 'DELETE',
+              body: JSON.stringify(data),
+              headers: {
+                'Content-Type': 'application/json'
+              }
+            });
+            const response = await fetch(request)
+            console.log('Completed!', response.body);
+          
+          } catch(err) {
+            console.error(`Error: ${err}`);
+          }
+      }
     </script>
   </head>
   <body>
